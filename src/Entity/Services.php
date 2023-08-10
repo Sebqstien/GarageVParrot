@@ -29,7 +29,7 @@ class Services
     #[ORM\JoinColumn(nullable: false)]
     private ?Garages $garage = null;
 
-    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Images::class)]
+    #[ORM\OneToMany(mappedBy: 'service', targetEntity: Images::class, orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()

@@ -18,11 +18,11 @@ class Images
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Services $service = null;
+    private ?Ads $ad = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Ads $ad = null;
+    private ?Services $service = null;
 
     public function getId(): ?int
     {
@@ -41,18 +41,6 @@ class Images
         return $this;
     }
 
-    public function getService(): ?Services
-    {
-        return $this->service;
-    }
-
-    public function setService(?Services $service): static
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
     public function getAd(): ?Ads
     {
         return $this->ad;
@@ -61,6 +49,18 @@ class Images
     public function setAd(?Ads $ad): static
     {
         $this->ad = $ad;
+
+        return $this;
+    }
+
+    public function getService(): ?Services
+    {
+        return $this->service;
+    }
+
+    public function setService(?Services $service): static
+    {
+        $this->service = $service;
 
         return $this;
     }

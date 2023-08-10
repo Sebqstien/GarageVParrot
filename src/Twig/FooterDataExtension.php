@@ -2,16 +2,18 @@
 
 namespace App\Twig;
 
-use Doctrine\ORM\EntityManager;
+use App\Entity\Garages;
+use App\Entity\Schedules;
+use Doctrine\ORM\EntityManagerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class FooterDataExtension extends AbstractExtension
 {
-    private EntityManager $entityManager;
+    private EntityManagerInterface $entityManager;
 
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -25,11 +27,14 @@ class FooterDataExtension extends AbstractExtension
     }
 
 
-    public function getFooterData()
+    public function getFooterData(): array
     {
         $garages = $this->entityManager->getRepository(Garages::class)->findAll();
         $schedules = $this->entityManager->getRepository(Schedules::class)->findAll();
-        $footerData = array($garages, $schedules);
-        return $footerData;
+
+        return [
+            'garages' => $garages,
+            'schedules' => $schedules,
+        ];
     }
 }

@@ -32,7 +32,10 @@ class Ads
     #[ORM\JoinColumn(nullable: false)]
     private ?Garages $garage = null;
 
-    #[ORM\OneToMany(mappedBy: 'ad', targetEntity: Images::class)]
+    #[ORM\OneToOne(mappedBy: 'ad', cascade: ['persist', 'remove'])]
+    private ?Cars $cars = null;
+
+    #[ORM\OneToMany(mappedBy: 'ad', targetEntity: Images::class, orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()
@@ -101,6 +104,23 @@ class Ads
     public function setGarage(?Garages $garage): static
     {
         $this->garage = $garage;
+
+        return $this;
+    }
+
+    public function getCars(): ?Cars
+    {
+        return $this->cars;
+    }
+
+    public function setCars(Cars $cars): static
+    {
+        // set the owning side of the relation if necessary
+        if ($cars->getAd() !== $this) {
+            $cars->setAd($this);
+        }
+
+        $this->cars = $cars;
 
         return $this;
     }

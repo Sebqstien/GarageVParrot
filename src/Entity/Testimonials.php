@@ -14,7 +14,7 @@ class Testimonials
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 100)]
     private ?string $author = null;
 
     #[ORM\Column(type: Types::TEXT)]

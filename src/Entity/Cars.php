@@ -28,7 +28,7 @@ class Cars
     #[ORM\Column]
     private ?int $year = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'cars', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ads $ad = null;
 

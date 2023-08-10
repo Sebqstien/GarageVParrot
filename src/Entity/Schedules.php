@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\SchedulesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SchedulesRepository::class)]
@@ -18,19 +16,15 @@ class Schedules
     #[ORM\Column(length: 30)]
     private ?string $openedDays = null;
 
-    #[ORM\Column(length: 60)]
-    private ?string $hoursAM = null;
-
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 100)]
     private ?string $hoursPM = null;
 
-    #[ORM\OneToMany(mappedBy: 'schedules', targetEntity: Garages::class)]
-    private Collection $garage;
+    #[ORM\Column(length: 100)]
+    private ?string $hoursAM = null;
 
-    public function __construct()
-    {
-        $this->garage = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'schedules')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Garages $garage = null;
 
     public function getId(): ?int
     {
@@ -49,18 +43,6 @@ class Schedules
         return $this;
     }
 
-    public function getHoursAM(): ?string
-    {
-        return $this->hoursAM;
-    }
-
-    public function setHoursAM(string $hoursAM): static
-    {
-        $this->hoursAM = $hoursAM;
-
-        return $this;
-    }
-
     public function getHoursPM(): ?string
     {
         return $this->hoursPM;
@@ -73,32 +55,26 @@ class Schedules
         return $this;
     }
 
-    /**
-     * @return Collection<int, Garages>
-     */
-    public function getGarage(): Collection
+    public function getHoursAM(): ?string
     {
-        return $this->garage;
+        return $this->hoursAM;
     }
 
-    public function addGarage(Garages $garage): static
+    public function setHoursAM(string $hoursAM): static
     {
-        if (!$this->garage->contains($garage)) {
-            $this->garage->add($garage);
-            $garage->setSchedules($this);
-        }
+        $this->hoursAM = $hoursAM;
 
         return $this;
     }
 
-    public function removeGarage(Garages $garage): static
+    public function getGarage(): ?Garages
     {
-        if ($this->garage->removeElement($garage)) {
-            // set the owning side to null (unless already changed)
-            if ($garage->getSchedules() === $this) {
-                $garage->setSchedules(null);
-            }
-        }
+        return $this->garage;
+    }
+
+    public function setGarage(?Garages $garage): static
+    {
+        $this->garage = $garage;
 
         return $this;
     }

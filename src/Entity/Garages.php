@@ -27,9 +27,8 @@ class Garages
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\ManyToOne(inversedBy: 'garage')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Schedules $schedules = null;
+    #[ORM\OneToMany(mappedBy: 'garage', targetEntity: Schedules::class)]
+    private Collection $schedules;
 
     #[ORM\ManyToMany(targetEntity: Users::class, mappedBy: 'garage')]
     private Collection $users;
@@ -45,6 +44,7 @@ class Garages
 
     public function __construct()
     {
+        $this->schedules = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
         $this->services = new ArrayCollection();
@@ -104,14 +104,32 @@ class Garages
         return $this;
     }
 
-    public function getSchedules(): ?Schedules
+    /**
+     * @return Collection<int, Schedules>
+     */
+    public function getSchedules(): Collection
     {
         return $this->schedules;
     }
 
-    public function setSchedules(?Schedules $schedules): static
+    public function addSchedule(Schedules $schedule): static
     {
-        $this->schedules = $schedules;
+        if (!$this->schedules->contains($schedule)) {
+            $this->schedules->add($schedule);
+            $schedule->setGarage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchedule(Schedules $schedule): static
+    {
+        if ($this->schedules->removeElement($schedule)) {
+            // set the owning side to null (unless already changed)
+            if ($schedule->getGarage() === $this) {
+                $schedule->setGarage(null);
+            }
+        }
 
         return $this;
     }
