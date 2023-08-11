@@ -85,7 +85,9 @@ footer {
 }
 
 .bg-overlay {
+
     background-image: url('/assets/img/bg-overlay.webp');
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -94,6 +96,7 @@ footer {
 }
 
 .bg-split {
+
     background-image: url('/assets/img/bg_split.webp');
     background-repeat: no-repeat;
     background-size: cover;
