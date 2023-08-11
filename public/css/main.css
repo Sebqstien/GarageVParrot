@@ -75,7 +75,7 @@ ul {
 
 
 footer {
-    background-image: url('/assets/img/bg_footer.jpg');
+    background-image: url('/assets/img/bg_footer.webp');
     background-repeat: no-repeat;
     background-size: cover;
     max-width: 100%;
@@ -85,7 +85,9 @@ footer {
 }
 
 .bg-overlay {
-    background-image: url('/assets/img/bg-overlay.jpg');
+
+    background-image: url('/assets/img/bg-overlay.webp');
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -94,7 +96,8 @@ footer {
 }
 
 .bg-split {
-    background-image: url('/assets/img/bg_split.jpg');
+
+    background-image: url('/assets/img/bg_split.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
