@@ -3,8 +3,26 @@
 {% block title %}{{ ad.title }}{% endblock title %}
 
 {% block body %}
+
+{# ALERTE SUCCÈS #}
+{% set successMessages = app.flashes('success') %}
+{% if successMessages|length > 0 %}
+<div class="alert alert-success mt-5 text-center" role="alert">
+    {{ successMessages[0] }}
+</div>
+{% endif %}
+
+{# ALERTE ERREUR #}
+{% set errorMessages = app.flashes('error') %}
+{% if errorMessages|length > 0 %}
+<div class="alert alert-danger mt-5 text-center" role="alert">
+    {{ errorMessages[0] }}
+</div>
+{% endif %}
+
 <main class="container-fluid m-0 p-0">
     <h1 class="text-center text-warning my-5">Details de l'annonce</h1>
+
 
     {# CAROUSEL #}
     <div class="d-flex justify-content-center">
@@ -67,38 +85,45 @@
     {# FORMULAIRE #}
     <section class="border-bottom border-warning  p-5 col-sm-8 d-flex flex-column flex-wrap mx-auto">
         <h2 class="text-center text-warning my-5">Contactez-nous</h2>
-        <form method="POST" action="/mail">
+        {{ form_start(form) }}
+        <div class="form-group">
             <div class="form-group">
-                <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" class="form-control my-1">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control my-1'}}) }}
             </div>
+        </div>
 
+        <div class="form-group">
             <div class="form-group">
-                <label for="email">E-mail :</label>
-                <input type="email" id="email" name="email" class="form-control my-1">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control my-1'}}) }}
             </div>
+        </div>
 
+        <div class="form-group">
             <div class="form-group">
-                <label for="sujet">Sujet :</label>
-                <input type="text" id="sujet" name="sujet" class="form-control my-1">
+                {{ form_label(form.subject) }}
+                {{ form_widget(form.subject, {'attr': {'class': 'form-control my-1'}}) }}
             </div>
+        </div>
 
+        <div class="form-group">
             <div class="form-group">
-                <label for="message">Message :</label>
-                <textarea id="message" name="message" class="form-control my-1" rows="10"></textarea>
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message, {'attr': {'class': 'form-control my-1'}}) }}
             </div>
+        </div>
 
-            <button type="submit" class="btn my-5">Envoyer</button>
-        </form>
+        <button type="submit" class="btn my-5">Envoyer</button>
+        {{ form_end(form) }}
+
         {# BTN on top #}
         <button id="topBtn" onclick="onTop()" class="btn"><i class="bi bi-arrow-up-circle-fill"></i></button>
         <a class="text-warning fw-bold text-center" href="{{ path('annonces') }}">Retour</a>
     </section>
-
-
 </main>
 
 {% endblock body %}
 {% block javascript %}
-<script src="/js/annonce.js"></script>
+<script defer src="{{ asset('/js/autoComplete.js') }}"></script>
 {% endblock javascript %}
