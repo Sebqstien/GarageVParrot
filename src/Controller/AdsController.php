@@ -17,7 +17,7 @@ class AdsController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/annonces', name: 'app_ads')]
+    #[Route('/annonces', name: 'annonces')]
     public function index(): Response
     {
         $ads = $this->entityManager->getRepository(Ads::class)->findAll();
@@ -25,6 +25,17 @@ class AdsController extends AbstractController
 
         return $this->render('ads/index.html.twig', [
             'ads' => $ads,
+        ]);
+    }
+
+
+    #[Route('/annonces/{id}', name: 'details')]
+    public function details(Ads $ad): Response
+    {
+        $ad = $this->entityManager->getRepository(Ads::class)->findOneById($ad->getId());
+
+        return $this->render('ads/details.html.twig', [
+            'ad' => $ad,
         ]);
     }
 }

@@ -19,7 +19,7 @@ class MainController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/', name: 'app_main')]
+    #[Route('/', name: 'accueil')]
     public function index(): Response
     {
         $services = $this->entityManager->getRepository(Services::class)->findAll();
