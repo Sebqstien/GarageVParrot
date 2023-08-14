@@ -2,42 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\Ads;
 use App\Form\ContactFormType;
 use Symfony\Component\Mime\Email;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdsController extends AbstractController
+
+class ContactController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    #[Route('/contact', name: 'contact')]
+    public function index(Request $request, MailerInterface $mailer): Response
     {
-        $this->entityManager = $entityManager;
-    }
-
-    #[Route('/annonces', name: 'annonces')]
-    public function index(): Response
-    {
-        $ads = $this->entityManager->getRepository(Ads::class)->findAll();
-
-
-        return $this->render('ads/index.html.twig', [
-            'ads' => $ads,
-        ]);
-    }
-
-
-    #[Route('/annonces/{id}', name: 'details')]
-    public function details(Ads $ad, Request $request, MailerInterface $mailer): Response
-    {
-        $ad = $this->entityManager->getRepository(Ads::class)->findOneById($ad->getId());
-
         $form = $this->createForm(ContactFormType::class);
 
         $form->handleRequest($request);
@@ -58,8 +36,7 @@ class AdsController extends AbstractController
             $this->addFlash('error', "Une erreur s'est produite. Veuillez réesayer.");
         }
 
-        return $this->render('ads/details.html.twig', [
-            'ad' => $ad,
+        return $this->render('contact/index.html.twig', [
             'form' => $form->createView()
         ]);
     }
