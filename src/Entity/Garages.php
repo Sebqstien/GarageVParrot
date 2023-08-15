@@ -30,9 +30,6 @@ class Garages
     #[ORM\OneToMany(mappedBy: 'garage', targetEntity: Schedules::class)]
     private Collection $schedules;
 
-    #[ORM\ManyToMany(targetEntity: Users::class, mappedBy: 'garage')]
-    private Collection $users;
-
     #[ORM\OneToMany(mappedBy: 'garage', targetEntity: Testimonials::class)]
     private Collection $testimonials;
 
@@ -42,13 +39,16 @@ class Garages
     #[ORM\OneToMany(mappedBy: 'garage', targetEntity: Ads::class)]
     private Collection $ads;
 
+    #[ORM\OneToMany(mappedBy: 'garage', targetEntity: Users::class)]
+    private Collection $users;
+
     public function __construct()
     {
         $this->schedules = new ArrayCollection();
-        $this->users = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->ads = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,32 +134,6 @@ class Garages
         return $this;
     }
 
-    /**
-     * @return Collection<int, Users>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(Users $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addGarage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(Users $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeGarage($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Testimonials>
@@ -245,6 +219,36 @@ class Garages
             // set the owning side to null (unless already changed)
             if ($ad->getGarage() === $this) {
                 $ad->setGarage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Users>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Users $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setGarage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Users $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getGarage() === $this) {
+                $user->setGarage(null);
             }
         }
 
