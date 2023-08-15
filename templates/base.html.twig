@@ -24,12 +24,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     {# Custom CSS #}
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="{{asset('/css/main.css')}}">
 
 
-    {% block javascripts %}
+    {% block javascript %}
     {% endblock %}
-    <script defer src="/js/topBtn.js"></script>
+    <script defer src="{{ asset('/js/topBtn.js') }}"></script>
     <script defer src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </head>
 
@@ -38,5 +38,5 @@
     {% block body %}{% endblock %}
     {% include "_partials/_footer.html.twig" %}
 </body>
-</html>
 
+</html>

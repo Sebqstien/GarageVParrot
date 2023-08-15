@@ -1,0 +1,129 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ ad.title }}{% endblock title %}
+
+{% block body %}
+
+{# ALERTE SUCCÈS #}
+{% set successMessages = app.flashes('success') %}
+{% if successMessages|length > 0 %}
+<div class="alert alert-success mt-5 text-center" role="alert">
+    {{ successMessages[0] }}
+</div>
+{% endif %}
+
+{# ALERTE ERREUR #}
+{% set errorMessages = app.flashes('error') %}
+{% if errorMessages|length > 0 %}
+<div class="alert alert-danger mt-5 text-center" role="alert">
+    {{ errorMessages[0] }}
+</div>
+{% endif %}
+
+<main class="container-fluid m-0 p-0">
+    <h1 class="text-center text-warning my-5">Details de l'annonce</h1>
+
+
+    {# CAROUSEL #}
+    <div class="d-flex justify-content-center">
+        <div id="carousel{{ ad.id }}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for index, image in ad.getimages()|slice(0, 3) %}
+                <div class="carousel-item {% if index == 0 %}active{% endif %}">
+                    <img src="{{ image.path }}" class="img-fluid border border-warning" alt="Image {{ index }}">
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ ad.id }}"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ ad.id }}"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <h6 class="text-center my-3">Date de mise en ligne: {{ ad.createdAt|date("d/m/Y") }}</h6>
+
+    {# DETAILS DE L'ANNONCE #}
+    <section class="border-bottom border-warning p-5 d-flex flex-column flex-wrap align-content-center">
+        <h3 class="text-center" id="titreAnnonce">{{ad.title}}</h3>
+
+        <ul class="my-5">
+            <li>
+                <p><span class="text-warning fw-bold">Marque: </span> {{ad.cars.brand}}</p>
+            </li>
+            <li>
+                <p><span class="text-warning fw-bold">Modele: </span> {{ad.cars.model}}</p>
+            </li>
+            <li>
+                <p><span class="text-warning fw-bold">Energie: </span> {{ad.cars.energy}}</p>
+            </li>
+            <li>
+                <p><span class="text-warning fw-bold">Annee: </span> {{ad.cars.year}}</p>
+            </li>
+            <li>
+                <p><span class="text-warning fw-bold">Kilometres: </span> {{ad.cars.kilometers}} KM</p>
+            </li>
+        </ul>
+        <h3 class="text-warning fs-1 text-center my-5 ">{{ ad.price }} €</h3>
+        <h6 class="fs-3 my-5">Liste des options:</h6>
+        <p>{% set descriptionArray = ad.description|split('\r\n') %}
+            {% for item in descriptionArray %}
+            {{item}} <br>
+            {% endfor %}
+        </p>
+        <p class="text-center fs-1 fw-bold my-5">
+            <i class="bi bi-telephone-fill text-warning fs-1 me-3"></i>{{ ad.garage.phone }}
+        </p>
+
+    </section>
+
+    {# FORMULAIRE #}
+    <section class="border-bottom border-warning  p-5 col-sm-8 d-flex flex-column flex-wrap mx-auto">
+        <h2 class="text-center text-warning my-5">Contactez-nous</h2>
+        {{ form_start(form) }}
+        <div class="form-group">
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control my-1'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control my-1'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                {{ form_label(form.subject) }}
+                {{ form_widget(form.subject, {'attr': {'class': 'form-control my-1'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-group">
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message, {'attr': {'class': 'form-control my-1'}}) }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn my-5">Envoyer</button>
+        {{ form_end(form) }}
+
+        {# BTN on top #}
+        <button id="topBtn" onclick="onTop()" class="btn"><i class="bi bi-arrow-up-circle-fill"></i></button>
+        <a class="text-warning fw-bold text-center" href="{{ path('annonces') }}">Retour</a>
+    </section>
+</main>
+
+{% endblock body %}
+{% block javascript %}
+<script defer src="{{ asset('/js/autoComplete.js') }}"></script>
+{% endblock javascript %}
