@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Schedules;
+use App\Entity\Testimonials;
 use App\Entity\Users;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,6 +40,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToUrl('Accueil', 'fa fa-home', '/');
+        yield MenuItem::linkToCrud('Avis clients', 'fa-solid fa-star', Testimonials::class);
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', Users::class);
             yield MenuItem::linkToCrud('Horaires', 'fas fa-clock', Schedules::class);
