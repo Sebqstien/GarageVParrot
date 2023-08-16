@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Garages;
 use App\Entity\Schedules;
 use App\Entity\Testimonials;
 use App\Entity\Users;
@@ -44,6 +45,7 @@ class DashboardController extends AbstractDashboardController
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', Users::class);
             yield MenuItem::linkToCrud('Horaires', 'fas fa-clock', Schedules::class);
+            yield MenuItem::linkToCrud('Garages', 'fas fa-city', Garages::class);
         }
     }
 }
