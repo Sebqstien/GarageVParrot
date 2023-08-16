@@ -10,6 +10,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ImagesCrudController extends AbstractCrudController
 {
+
+    public const BASE_PATH = 'public/upload/';
+
+
     public static function getEntityFqcn(): string
     {
         return Images::class;
@@ -22,9 +26,8 @@ class ImagesCrudController extends AbstractCrudController
             TextField::new('name', 'Intitulé de l\'image'),
             ImageField::new('path', 'Chemin de l\'image')
                 ->setUploadedFileNamePattern('upload/[uuid]-[name].[extension]')
-                ->setUploadDir('/public/upload/'),
-            AssociationField::new('ad', 'Annonce liée'),
-            AssociationField::new('service', 'Service liée')
+                ->setUploadDir(self::BASE_PATH),
+            AssociationField::new('ad', 'Annonce liée')
         ];
     }
 }

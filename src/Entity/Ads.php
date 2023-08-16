@@ -146,7 +146,7 @@ class Ads
     public function removeImage(Images $image): static
     {
         if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
+
             if ($image->getAd() === $this) {
                 $image->setAd(null);
             }

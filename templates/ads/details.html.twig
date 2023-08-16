@@ -24,30 +24,6 @@
     <h1 class="text-center text-warning my-5">Details de l'annonce</h1>
 
 
-    {# CAROUSEL #}
-    <div class="d-flex justify-content-center">
-        <div id="carousel{{ ad.id }}" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for index, image in ad.getimages()|slice(0, 3) %}
-                <div class="carousel-item {% if index == 0 %}active{% endif %}">
-                    <img src="{{ image.path }}" class="img-fluid border border-warning" alt="Image {{ index }}">
-                </div>
-                {% endfor %}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ ad.id }}"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ ad.id }}"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-    <h6 class="text-center my-3">Date de mise en ligne: {{ ad.createdAt|date("d/m/Y") }}</h6>
-
     {# DETAILS DE L'ANNONCE #}
     <section class="border-bottom border-warning p-5 d-flex flex-column flex-wrap align-content-center">
         <h3 class="text-center" id="titreAnnonce">{{ad.title}}</h3>
