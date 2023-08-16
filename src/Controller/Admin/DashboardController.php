@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Schedules;
 use App\Entity\Users;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +41,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToUrl('Accueil', 'fa fa-home', '/');
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', Users::class);
+            yield MenuItem::linkToCrud('Horaires', 'fas fa-clock', Schedules::class);
         }
     }
 }
