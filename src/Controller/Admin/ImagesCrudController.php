@@ -23,7 +23,7 @@ class ImagesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name', 'Intitulé de l\'image'),
+            TextField::new('name', 'Voiture'),
             ImageField::new('path', 'Chemin de l\'image')
                 ->setUploadedFileNamePattern('upload/[uuid]-[name].[extension]')
                 ->setUploadDir(self::BASE_PATH),

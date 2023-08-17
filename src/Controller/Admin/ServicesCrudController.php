@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Services;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -21,7 +22,8 @@ class ServicesCrudController extends AbstractCrudController
         return [
             TextField::new('title', 'Titre'),
             TextareaField::new('description'),
-            MoneyField::new('price', 'Prix')->setCurrency('EUR')
+            MoneyField::new('price', 'Prix')->setCurrency('EUR'),
+            AssociationField::new('garage', 'Garage')
         ];
     }
 }

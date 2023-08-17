@@ -19,7 +19,6 @@ class GaragesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
             TextField::new('name', 'Nom'),
             EmailField::new('mail', 'Email'),
             TextField::new('phone', 'Téléphone'),

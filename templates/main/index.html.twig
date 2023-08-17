@@ -20,7 +20,7 @@
             {% for service in services %}
             <div class="col-sm-10  col-xl-8 border border-warning d-flex m-5 flex-column p-5">
                 <h3 class="text-center">{{service.title}}</h3>
-                <h6 class="text-warning fs-1 fw-bold my-5 text-center">{{service.price}} €</h6>
+                <h6 class="text-warning fs-1 fw-bold my-5 text-center">{{service.price / 100}} €</h6>
                 <div class="mx-auto">
                     <p class="fs-5 text-justify">{% set descriptionArray = service.description|split('-') %}
                         {% for item in descriptionArray %}
