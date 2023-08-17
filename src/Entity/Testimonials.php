@@ -24,7 +24,7 @@ class Testimonials
     private ?int $note = null;
 
     #[ORM\Column]
-    private ?bool $validated = null;
+    private ?bool $validated = false;
 
     #[ORM\ManyToOne(inversedBy: 'testimonials')]
     #[ORM\JoinColumn(nullable: false)]
