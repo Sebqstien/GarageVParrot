@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Ads;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Data\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Ads>
@@ -21,28 +22,52 @@ class AdsRepository extends ServiceEntityRepository
         parent::__construct($registry, Ads::class);
     }
 
-//    /**
-//     * @return Ads[] Returns an array of Ads objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findSearch(SearchData $search): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('c', 'a')
+            ->join('a.cars', 'c');
 
-//    public function findOneBySomeField($value): ?Ads
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (!empty($search->priceMin)) {
+            $qb->andWhere('a.price >= :priceMin')
+                ->setParameter('priceMin', $search->priceMin);
+        }
+
+        if (!empty($search->priceMax)) {
+            $qb->andWhere('a.price <= :priceMax')
+                ->setParameter('priceMax', $search->priceMax);
+        }
+
+        if (!empty($search->kilometersMin)) {
+            $qb->andWhere('c.kilometers >= :kilometersMin')
+                ->setParameter('kilometersMin', $search->kilometersMin);
+        }
+
+        if (!empty($search->kilometersMax)) {
+            $qb->andWhere('c.kilometers <= :kilometersMax')
+                ->setParameter('kilometersMax', $search->kilometersMax);
+        }
+
+        if (!empty($search->yearMin)) {
+            $qb->andWhere('c.year >= :yearMin')
+                ->setParameter('yearMin', $search->yearMin);
+        }
+
+        if (!empty($search->yearMax)) {
+            $qb->andWhere('c.year <= :yearMax')
+                ->setParameter('yearMax', $search->yearMax);
+        }
+
+        if (!empty($search->brand)) {
+            $qb->andWhere('c.brand = :brand')
+                ->setParameter('brand', $search->brand);
+        }
+
+        if (!empty($search->energy)) {
+            $qb->andWhere('c.energy = :energy')
+                ->setParameter('energy', $search->energy);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

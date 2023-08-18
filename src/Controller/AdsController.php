@@ -2,33 +2,38 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Ads;
 use App\Form\ContactFormType;
+use App\Form\SearchFormType;
+use App\Repository\AdsRepository;
 use Symfony\Component\Mime\Email;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class AdsController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
 
     #[Route('/annonces', name: 'annonces')]
-    public function index(): Response
+    public function index(AdsRepository $adsRepository, Request $request): Response
     {
-        $ads = $this->entityManager->getRepository(Ads::class)->findAll();
+
+        $data = new SearchData;
+        $form = $this->createForm(SearchFormType::class, $data);
+        $form->handleRequest($request);
+
+        $ads = $adsRepository->findSearch($data);
+
 
 
         return $this->render('ads/index.html.twig', [
             'ads' => $ads,
+            'form' => $form->createView()
         ]);
     }
 
@@ -36,7 +41,6 @@ class AdsController extends AbstractController
     #[Route('/annonces/{id}', name: 'details')]
     public function details(Ads $ad, Request $request, MailerInterface $mailer): Response
     {
-        $ad = $this->entityManager->getRepository(Ads::class)->findOneById($ad->getId());
 
         $form = $this->createForm(ContactFormType::class);
 

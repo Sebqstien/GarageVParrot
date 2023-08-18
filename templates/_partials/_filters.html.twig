@@ -1,0 +1,25 @@
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-md-3">
+        {{ form_row(form.priceMin ) }}
+        {{ form_row(form.priceMax ) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.kilometersMin) }}
+        {{ form_row(form.kilometersMax) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.yearMin) }}
+        {{ form_row(form.yearMax) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.brand) }}
+        {{ form_row(form.energy) }}
+    </div>
+</div>
+
+<button type="submit" class="btn btn-warning">Filtrer</button>
+<button type="button" class="btn btn-secondary border border-secondary" onclick="resetFilters()">Réinitialiser</button>
+
+{{ form_end(form) }}

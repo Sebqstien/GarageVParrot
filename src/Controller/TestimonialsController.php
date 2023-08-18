@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Garages;
 use App\Entity\Testimonials;
+use App\Repository\TestimonialsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,9 @@ class TestimonialsController extends AbstractController
     }
 
     #[Route('/avis', name: 'avis')]
-    public function index(Request $request): Response
+    public function index(TestimonialsRepository $testimonialsRepository): Response
     {
-        $testimonials = $this->entityManager->getRepository(Testimonials::class)->findbyValidated(1);
+        $testimonials = $testimonialsRepository->findByValidated(1);
 
         return $this->render('testimonials/index.html.twig', [
             'avis' => $testimonials,
@@ -38,10 +39,19 @@ class TestimonialsController extends AbstractController
         $message = $request->request->get('message');
         $garageId = $request->request->get('garage_id');
 
-
         $garage = $this->entityManager->getRepository(Garages::class)->find($garageId);
 
+        $testimonial = $this->createTestimonial($note, $author, $message, $garage);
 
+        $this->entityManager->persist($testimonial);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('avis');
+    }
+
+
+    private function createTestimonial($note, $author, $message, $garage): Testimonials
+    {
         $testimonial = new Testimonials;
         $testimonial
             ->setNote($note)
@@ -49,9 +59,6 @@ class TestimonialsController extends AbstractController
             ->setMessage($message)
             ->setGarage($garage);
 
-        $this->entityManager->persist($testimonial);
-        $this->entityManager->flush();
-
-        return $this->redirectToRoute('avis');
+        return $testimonial;
     }
 }
