@@ -4,12 +4,12 @@ Annonces
 {% endblock title %}
 
 {% block body %}
-<main class="container- m-0 p-0">
+<main class="container-fluid m-0 p-0">
     <h1 class="text-center text-warning my-5">Les Occasions</h1>
 
     {# FILTER #}
-    <section class="row my-5 border-bottom border-warning d-flex flex-column align-content-center flex-wrap">
-        <h3 class="text-center text-warning mt-5">Filtres</h3>
+    <section class="row my-5 border-bottom border-warning">
+        <h3 class="text-center text-warning my-5">Filtres</h3>
 
         {% include "_partials/_filters.html.twig" with {form: form} only %}
     </section>
@@ -66,7 +66,7 @@ Annonces
                                 <p><span class="text-warning fw-bold">Kilomètres</span>: {{ ad.cars.kilometers }} km</p>
                             </li>
                         </ul>
-                        <h3 class="text-warning fs-1 text-center my-5">{{ ad.price / 100 }} €</h3>
+                        <h3 class="text-warning fs-1 text-center my-5">{{ ad.price }} €</h3>
                         <a class="btn" href="/annonces/{{ ad.id }}">Détails</a>
                     </div>
                 </div>

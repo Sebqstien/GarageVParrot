@@ -27,18 +27,15 @@ window.onload = () => {
         });
     }
 
-    /**
-     * Reset des étoiles en vérifiant la note dans l'input caché
-     * @param {number} note 
-     */
     function resetStars(note = 0) {
         for (star of stars) {
-            if (star.dataset.value > note) {
+            const starValue = parseInt(star.dataset.value);
+            if (starValue <= note) {
+                star.classList.remove("bi-star");
+                star.classList.add("bi-star-fill");
+            } else {
                 star.classList.remove("bi-star-fill");
                 star.classList.add("bi-star");
-            } else {
-                star.classList.add("bi-star-fill");
-                star.classList.remove("bi-star");
             }
         }
     }

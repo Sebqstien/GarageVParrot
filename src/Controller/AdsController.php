@@ -7,9 +7,8 @@ use App\Entity\Ads;
 use App\Form\ContactFormType;
 use App\Form\SearchFormType;
 use App\Repository\AdsRepository;
-use Symfony\Component\Mime\Email;
+use App\Service\SendMailerService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +38,7 @@ class AdsController extends AbstractController
 
 
     #[Route('/annonces/{id}', name: 'details')]
-    public function details(Ads $ad, Request $request, MailerInterface $mailer): Response
+    public function details(Ads $ad, Request $request, SendMailerService $mail): Response
     {
 
         $form = $this->createForm(ContactFormType::class);
@@ -49,13 +48,14 @@ class AdsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $email = (new Email())
-                ->from($data['email'])
-                ->to('contact@vparrot.fr')
-                ->subject($data['subject'])
-                ->text($data['message']);
 
-            $mailer->send($email);
+            $mail->send(
+                $data['email'],
+                'contact@vparrot.fr',
+                $data['subject'],
+                $data['message']
+            );
+
 
             $this->addFlash('success', 'Votre message a été envoyé avec succès !');
         } elseif ($form->isSubmitted()) {

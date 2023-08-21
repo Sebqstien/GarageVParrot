@@ -27,7 +27,9 @@ class AdsCrudController extends AbstractCrudController
             TextareaField::new('description'),
             AssociationField::new('garage', 'Garage'),
             DateField::new('createdAt')->hideOnForm(),
-            MoneyField::new('price', 'Prix')->setCurrency('EUR')
+            MoneyField::new('price', 'Prix')
+                ->setCurrency('EUR')
+                ->setCustomOption('storedAsCents', false)
         ];
     }
 

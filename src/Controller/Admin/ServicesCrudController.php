@@ -22,7 +22,9 @@ class ServicesCrudController extends AbstractCrudController
         return [
             TextField::new('title', 'Titre'),
             TextareaField::new('description'),
-            MoneyField::new('price', 'Prix')->setCurrency('EUR'),
+            MoneyField::new('price', 'Prix')
+                ->setCurrency('EUR')
+                ->setCustomOption('storedAsCents', false),
             AssociationField::new('garage', 'Garage')
         ];
     }

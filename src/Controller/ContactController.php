@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Form\ContactFormType;
-use Symfony\Component\Mime\Email;
+use App\Service\SendMailerService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'contact')]
-    public function index(Request $request, MailerInterface $mailer): Response
+    public function index(Request $request, SendMailerService $mail): Response
     {
         $form = $this->createForm(ContactFormType::class);
 
@@ -23,13 +22,12 @@ class ContactController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $email = (new Email())
-                ->from($data['email'])
-                ->to('contact@vparrot.fr')
-                ->subject($data['subject'])
-                ->text($data['message']);
-
-            $mailer->send($email);
+            $mail->send(
+                $data['email'],
+                'contact@vparrot.fr',
+                $data['subject'],
+                $data['message']
+            );
 
             $this->addFlash('success', 'Votre message a été envoyé avec succès !');
         } elseif ($form->isSubmitted()) {
