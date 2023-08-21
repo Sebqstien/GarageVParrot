@@ -77,6 +77,8 @@
                         </select>
                     </div>
 
+                    <input type="hidden" name="token" value="{{ csrf_token('save_testimonial') }}">
+
                     <button type="submit" class="btn my-5">Donner son avis</button>
                 </div>
         </form>

@@ -21,6 +21,12 @@ security:
                 path: logout
                 # where to redirect after logout
                 target: accueil
+            
+            # Limiting Login Attempts(Brute Force)
+            # by default, the feature allows 5 login attempts per minute
+            login_throttling: null
+                
+                
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

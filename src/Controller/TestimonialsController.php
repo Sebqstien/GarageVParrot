@@ -38,6 +38,19 @@ class TestimonialsController extends AbstractController
         $author = $request->request->get('author');
         $message = $request->request->get('message');
         $garageId = $request->request->get('garage_id');
+        $submittedToken = $request->request->get('token');
+
+        if (!$this->isCsrfTokenValid('save_testimonial', $submittedToken)) {
+            return new Response('Invalid CSRF token', Response::HTTP_FORBIDDEN);
+        }
+
+        if (!is_numeric($note) || $note < 1 || $note > 5) {
+            return new Response('Invalid note value', Response::HTTP_BAD_REQUEST);
+        }
+
+        if (empty($author) || empty($message)) {
+            return new Response('Author and message are required', Response::HTTP_BAD_REQUEST);
+        }
 
         $garage = $this->entityManager->getRepository(Garages::class)->find($garageId);
 
@@ -46,11 +59,12 @@ class TestimonialsController extends AbstractController
         $this->entityManager->persist($testimonial);
         $this->entityManager->flush();
 
+
         return $this->redirectToRoute('avis');
     }
 
 
-    private function createTestimonial($note, $author, $message, $garage): Testimonials
+    private function createTestimonial(int $note, string $author, string $message, Garages $garage): Testimonials
     {
         $testimonial = new Testimonials;
         $testimonial
