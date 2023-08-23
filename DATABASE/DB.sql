@@ -1,5 +1,3 @@
-USE garagevparrot;
-
 
 INSERT INTO `ads` (`id`, `garage_id`, `title`, `description`, `price`, `created_at`) VALUES
 (9, 1, 'PEUGEOT 308 1.5 BLUEHDI 130CH S&S ACTIVE BUSINESS', 'DIMENSIONS\r\n\r\nLongueur 4,25 m\r\nLargeur 1,80 m\r\nHauteur 1,46 m\r\nEmpattement 2,62 m\r\nRéservoir53 l\r\nPorte à faux avant 0,863 m\r\nPorte à faux arrière 0,770 m\r\nVoies avant 1,559 m\r\nVoies arrière 1,553 m\r\nGarde au sol 110 mm\r\n\r\nPOIDS\r\n\r\nPoids à vide1 180 kg\r\nPTAC1 810 kg\r\nPTRA3 300 kg\r\n\r\nHABITABILITÉ\r\n\r\nNombre de places 5\r\nVolume de coffre 420 l\r\nVolume de coffre utile1 228 l\r\n\r\nPNEUMATIQUES\r\n\r\nTypes de pneumatiques Eté\r\nMatériau des jantes Aluminium\r\nTaille des roues avant 205/55 R16\r\nTaille des roues arrière205/55 R16\r\nType de roues de secours\r\nKit de dépannage pneumatique', 13900, '2023-08-17 06:14:40'),

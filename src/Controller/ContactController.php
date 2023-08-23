@@ -17,16 +17,15 @@ class ContactController extends AbstractController
     {
         $form = $this->createForm(ContactFormType::class);
 
-        $form->handleRequest($request);
+        $contact = $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
 
             $mail->send(
-                $data['email'],
-                'contact@vparrot.fr',
-                $data['subject'],
-                $data['message']
+                $contact->get('email')->getData(),
+                'contact@garage-vparrot.fr',
+                $contact->get('subject')->getData(),
+                $contact->get('message')->getData(),
             );
 
             $this->addFlash('success', 'Votre message a été envoyé avec succès !');

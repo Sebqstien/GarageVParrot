@@ -22,7 +22,7 @@ class SendMailerService
         string $message
     ) {
         $email = (new Email())
-            ->from(filter_var($from, FILTER_VALIDATE_EMAIL))
+            ->from($from)
             ->to($to)
             ->subject($subject)
             ->text($message);

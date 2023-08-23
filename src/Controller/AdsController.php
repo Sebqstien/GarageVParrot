@@ -51,7 +51,7 @@ class AdsController extends AbstractController
 
             $mail->send(
                 $data['email'],
-                'contact@vparrot.fr',
+                'contact@garage-vparrot.fr',
                 $data['subject'],
                 $data['message']
             );
