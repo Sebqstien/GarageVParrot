@@ -70,7 +70,7 @@ Connexion des utilisateurs:
 | Email| Password | Admin
 | -------- | -------- | -------- |
 | v.parrot@garage-vparrot.fr    | password   | 1    |
-| j.doe@vparrot.fr    | password   | 0   |
+| j.doe@garage-vparrot.fr    | password   | 0   |
         
 
 
