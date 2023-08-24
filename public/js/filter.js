@@ -6,13 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
 
         const formData = new FormData(filtresForm);
-        const params = new URLSearchParams(formData);
 
-        const url = '/filtres?' + params.toString();
 
-        console.log('Fetching data from:', url);
-
-        fetch(url)
+        fetch('/annonces/filtres', {
+            method: 'POST',
+            body: formData
+        })
             .then(response => response.json())
             .then(data => {
                 console.log('Received data:', data);

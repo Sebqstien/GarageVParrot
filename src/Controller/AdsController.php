@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\Form\FormInterface;
 
 class AdsController extends AbstractController
 {
@@ -22,17 +22,35 @@ class AdsController extends AbstractController
     public function index(AdsRepository $adsRepository, Request $request): Response
     {
 
-        $data = new SearchData;
-        $form = $this->createForm(SearchFormType::class, $data);
-        $form->handleRequest($request);
+        $form = $this->createSearchForm($request);
 
-        $ads = $adsRepository->findSearch($data);
+        $ads = $adsRepository->findAll();
 
 
 
         return $this->render('ads/index.html.twig', [
             'ads' => $ads,
             'form' => $form->createView()
+        ]);
+    }
+
+
+    #[Route('/annonces/filtres', name: 'filtres_annonces')]
+    public function filteredAnnonces(AdsRepository $adsRepository, Request $request): Response
+    {
+
+        $form = $this->createSearchForm($request);
+
+        $ads = $adsRepository->findSearch($form->getData());
+
+        $html = $this->renderView('_partials/_annonces.html.twig', [
+            'ads' => $ads
+        ]);
+
+
+
+        return $this->json([
+            'html' => $html
         ]);
     }
 
@@ -66,5 +84,13 @@ class AdsController extends AbstractController
             'ad' => $ad,
             'form' => $form->createView()
         ]);
+    }
+
+    private function createSearchForm(Request $request): FormInterface
+    {
+        $data = new SearchData;
+        $form = $this->createForm(SearchFormType::class, $data);
+        $form->handleRequest($request);
+        return $form;
     }
 }

@@ -90,7 +90,7 @@ class SearchFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => SearchData::class,
-            'method' => 'GET',
+            'method' => 'POST',
         ]);
     }
 }
