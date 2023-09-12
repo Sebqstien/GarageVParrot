@@ -10,7 +10,7 @@
                     <ul class="list-group d-flex flex-column flex-wrap align-content-center justify-content-center">
                         <li class="fs-5 my-2">
                             <i class="bi bi-chevron-right text-warning"></i>
-                            <a href="/">Accueil</a>
+                            <a href="{{ path('accueil') }}">Accueil</a>
                         </li>
                         <li class="fs-5 my-2">
                             <i class="bi bi-chevron-right text-warning"></i>
@@ -18,15 +18,15 @@
                         </li>
                         <li class="fs-5 my-2">
                             <i class="bi bi-chevron-right text-warning"></i>
-                            <a href="/annonces">Les occasions</a>
+                            <a href="{{ path('annonces') }}">Les occasions</a>
                         </li>
                         <li class="fs-5 my-2">
                             <i class="bi bi-chevron-right text-warning"></i>
-                            <a href="/avis">Avis Clients</a>
+                            <a href="{{ path('avis') }}">Avis Clients</a>
                         </li>
                         <li class="fs-5 my-2">
                             <i class="bi bi-chevron-right text-warning"></i>
-                            <a href="/contact">Contactez-nous</a>
+                            <a href="{{ path('contact') }}">Contactez-nous</a>
                         </li>
                     </ul>
                 </div>
@@ -59,6 +59,13 @@
                     </div>
                     {% endfor %}
                 </ul>
+            </div>
+
+            <div class="text-center py-2">
+                <p>
+                    © 2023 - Garage V.Parrot -
+                    <a href="{{ path('legal') }}"> Mentions légales</a>
+                </p>
             </div>
         </div>
     </div>
