@@ -14,11 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Received data:', data);
                 annoncesContainer.innerHTML = data.html;
             })
             .catch(error => {
-                console.error('An error occurred:', error);
+                throw new Error('An erro occurred: ' + error)
             });
     });
 });
