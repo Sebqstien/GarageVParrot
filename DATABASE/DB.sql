@@ -1,4 +1,20 @@
 INSERT INTO
+    `garages` (
+        `id`,
+        `name`,
+        `mail`,
+        `phone`,
+        `address`
+    )
+VALUES (
+        1,
+        'Garage Vincent Parrot',
+        'contact@vparrot.fr',
+        '0251999999',
+        '99, Roving Street 23 456 NYC'
+    );
+
+INSERT INTO
     `ads` (
         `id`,
         `garage_id`,
@@ -64,22 +80,6 @@ VALUES (
         'DIESEL',
         '102422',
         2016
-    );
-
-INSERT INTO
-    `garages` (
-        `id`,
-        `name`,
-        `mail`,
-        `phone`,
-        `address`
-    )
-VALUES (
-        1,
-        'Garage Vincent Parrot',
-        'contact@vparrot.fr',
-        '0251999999',
-        '99, Roving Street 23 456 NYC'
     );
 
 INSERT INTO
@@ -224,7 +224,7 @@ VALUES (
         'Vincent',
         'Parrot',
         'v.parrot@vparrot.fr',
-        '$2y$13$le163ag.M3oi4LpO7Je5WO6xRuBmaeqC2ny7uTHzmuwIwl30i00fa',
+        '$2y$13$OmSaNxVk7nJZdlmRAiMXwuW0xlTjSWfWoNPKb029gmmps62uA/IAe',
         '[\"ROLE_ADMIN\"]',
         1
     ), (
@@ -232,9 +232,7 @@ VALUES (
         'John',
         'Doe',
         'j.doe@vparrot.fr',
-        '$2y$13$RTxGT0uYC9To21.AAsXXeef1J/Xzb2CT8PIvbvS.0jAT9laRkWXO.',
+        '$2y$13$OmSaNxVk7nJZdlmRAiMXwuW0xlTjSWfWoNPKb029gmmps62uA/IAe',
         '[]',
         1
     );
-
-- 
